@@ -1,0 +1,264 @@
+/* Introduction Section */
+.intro-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.intro-content h2 {
+  color: var(--primary-maroon);
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.intro-content p {
+  font-size: var(--fs-body-lg);
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Focus Section */
+.focus-section h2,
+.users-section h2,
+.institutions-section h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  color: var(--primary-maroon);
+}
+
+.focus-section .section-subtitle {
+  margin-top: -0.5rem;
+}
+
+.objectives-grid {
+  margin-top: var(--spacing-xl);
+}
+
+.objective-card {
+  background-color: var(--secondary-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-base);
+  border-left: 4px solid var(--accent-gold);
+}
+
+.objective-card h3 {
+  color: var(--primary-maroon);
+  font-size: var(--fs-h3);
+  margin-bottom: var(--spacing-sm);
+}
+
+.objective-card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* Technology Section */
+.tech-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.tech-category {
+  background-color: var(--secondary-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-base);
+}
+
+.tech-category h3 {
+  color: var(--primary-maroon);
+  font-size: var(--fs-h4);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--accent-gold);
+}
+
+.tech-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tech-category li {
+  padding: var(--spacing-sm) 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.tech-category li strong {
+  color: var(--primary-maroon);
+  font-weight: 600;
+}
+
+/* Institutions Section */
+
+/* Development Team Section */
+.development-team-section {
+  background-color: var(--secondary-off-white);
+}
+
+.development-team-section .section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-maroon);
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  margin-bottom: var(--spacing-xl);
+}
+
+.team-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.team-intro {
+  text-align: center;
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--spacing-xl);
+}
+
+.developers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  justify-content: center;
+}
+
+.developer-card {
+  background-color: var(--secondary-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-base);
+  border-top: 4px solid var(--accent-gold);
+  text-align: center;
+  transition: all var(--transition-medium);
+  flex: 0 1 300px;
+  max-width: 300px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.developer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-top-color: var(--primary-maroon);
+}
+
+.developer-card h3 {
+  color: var(--primary-maroon);
+  font-size: var(--fs-h4);
+  margin-bottom: var(--spacing-md);
+  font-weight: var(--fw-semibold);
+}
+
+.developer-education {
+  color: var(--text-secondary);
+  font-size: var(--fs-body-sm);
+  line-height: 1.7;
+  font-weight: var(--fw-medium);
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, var(--primary-maroon) 0%, var(--primary-deep-red) 100%);
+  color: var(--text-light);
+}
+
+.cta-content {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.cta-content h2 {
+  color: var(--text-light);
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  margin-bottom: var(--spacing-md);
+}
+
+.cta-content p {
+  color: var(--secondary-off-white);
+  font-size: var(--fs-body-lg);
+  max-width: 700px;
+  margin: 0 auto var(--spacing-xl);
+  line-height: 1.7;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-section .btn-outline {
+  border-color: var(--text-light);
+  color: var(--text-light);
+}
+
+.cta-section .btn-outline:hover {
+  background-color: var(--text-light);
+  color: var(--primary-maroon);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .tech-content {
+    grid-template-columns: 1fr;
+  }
+
+  .users-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-content h2 {
+    font-size: 1.85rem;
+  }
+
+  .intro-content p {
+    font-size: 1rem;
+  }
+
+  .objectives-grid,
+  .users-list {
+    grid-template-columns: 1fr;
+  }
+
+  .development-team-section .section-title {
+    font-size: 1.85rem;
+  }
+
+  .team-intro {
+    font-size: 0.95rem;
+  }
+
+  .developer-card,
+  .institution-card {
+    flex: 1 1 250px;
+    max-width: 250px;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .cta-content p {
+    font-size: 1.1rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

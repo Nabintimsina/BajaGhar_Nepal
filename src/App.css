@@ -1,0 +1,84 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: transparent;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 70px; /* Height of fixed navbar */
+}
+
+/* Ensure UI elements use the chosen system font and button sizing */
+nav, .navbar, .card, header, footer, button, input, textarea, select {
+  font-family: var(--font-body);
+}
+
+button, .btn {
+  font-size: var(--fs-button);
+  font-weight: var(--fw-button);
+  line-height: 1.2;
+}
+
+/* Nepali / Devanagari text helper */
+.nepali, .devanagari {
+  font-family: var(--font-devanagari);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+.nepali-serif, .devanagari-serif {
+  font-family: var(--font-devanagari-serif);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.75;
+}
+
+/* Ensure Devanagari script renders with proper weight and spacing */
+[lang="ne"],
+[lang="ne-NP"],
+[lang="new"] {
+  font-family: var(--font-devanagari);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+[lang="ne"] p,
+[lang="ne-NP"] p,
+.nepali p,
+.devanagari p {
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+[lang="ne"] h1,
+[lang="ne"] h2,
+[lang="ne"] h3,
+[lang="ne"] h4,
+[lang="ne"] h5,
+[lang="ne"] h6,
+[lang="ne-NP"] h1,
+[lang="ne-NP"] h2,
+[lang="ne-NP"] h3,
+[lang="ne-NP"] h4,
+[lang="ne-NP"] h5,
+[lang="ne-NP"] h6,
+.nepali h1,
+.nepali h2,
+.nepali h3,
+.nepali h4,
+.nepali h5,
+.nepali h6,
+.devanagari h1,
+.devanagari h2,
+.devanagari h3,
+.devanagari h4,
+.devanagari h5,
+.devanagari h6 {
+  font-family: var(--font-devanagari);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}

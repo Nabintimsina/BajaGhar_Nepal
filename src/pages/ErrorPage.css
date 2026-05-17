@@ -1,0 +1,211 @@
+.error-page {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+  padding: var(--spacing-2xl) 0;
+}
+
+.error-page-container {
+  width: 100%;
+}
+
+.error-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+  gap: var(--spacing-2xl);
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(212, 175, 55, 0.14), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(77, 45, 26, 0.1), transparent 32%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(250, 248, 243, 0.96));
+  box-shadow: var(--shadow-elevated);
+  overflow: hidden;
+}
+
+.error-card::before,
+.error-card::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.error-card::before {
+  width: 260px;
+  height: 260px;
+  top: -110px;
+  right: -90px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.18), transparent 68%);
+}
+
+.error-card::after {
+  width: 180px;
+  height: 180px;
+  bottom: -70px;
+  left: -60px;
+  background: radial-gradient(circle, rgba(128, 0, 32, 0.12), transparent 70%);
+}
+
+.error-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(77, 45, 26, 0.96), rgba(74, 44, 44, 0.96));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 14px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.error-visual::before,
+.error-visual::after {
+  content: '';
+  position: absolute;
+  inset: auto;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.error-visual::before {
+  width: 220px;
+  height: 220px;
+  top: 18%;
+  left: 12%;
+}
+
+.error-visual::after {
+  width: 140px;
+  height: 140px;
+  bottom: 14%;
+  right: 14%;
+}
+
+.error-number {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-heading);
+  font-size: clamp(5rem, 12vw, 8rem);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.error-icon-wrap {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: rgba(212, 175, 55, 0.16);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.error-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--accent-gold);
+}
+
+.error-content {
+  position: relative;
+  z-index: 1;
+}
+
+.error-content h1 {
+  margin-bottom: var(--spacing-sm);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+
+.error-message {
+  max-width: 580px;
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--fs-body-lg);
+  color: var(--text-body-muted);
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.error-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 46px;
+  padding: 0.75rem 1.15rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.error-primary-btn {
+  background: linear-gradient(135deg, var(--accent-gold), #e6c15b);
+  color: var(--text-primary) !important;
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.25);
+}
+
+.error-secondary-btn {
+  background: rgba(77, 45, 26, 0.08);
+  color: var(--primary-maroon) !important;
+  border-color: rgba(77, 45, 26, 0.16) !important;
+}
+
+.error-tertiary-btn {
+  background: transparent;
+  color: var(--text-body) !important;
+  border-color: var(--border-soft) !important;
+}
+
+.error-actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+.error-primary-btn:hover {
+  box-shadow: 0 14px 28px rgba(212, 175, 55, 0.32);
+}
+
+@media (max-width: 900px) {
+  .error-card {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .error-visual {
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .error-page {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .error-card {
+    padding: 1rem;
+    border-radius: 22px;
+  }
+
+  .error-actions {
+    flex-direction: column;
+  }
+
+  .error-actions .btn {
+    width: 100%;
+  }
+}

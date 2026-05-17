@@ -1,0 +1,123 @@
+.language-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.lang-indicator {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  height: calc(100% - 8px);
+  border-radius: 999px;
+  background: var(--accent-gold);
+  box-shadow: 0 6px 14px rgba(212, 175, 55, 0.35);
+  transition: transform 0.32s ease, background-color 0.2s ease;
+}
+
+.lang-indicator.ne {
+  transform: translateX(calc(100% + 8px));
+}
+
+.lang-btn {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  min-width: 52px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.25s ease;
+  color: #f0f0f0;
+  border-radius: 999px;
+}
+
+.lang-btn:hover {
+  color: var(--text-light);
+  transform: translateY(-1px);
+}
+
+.lang-btn.active {
+  color: var(--text-body);
+}
+
+.lang-btn.active:hover {
+  color: var(--text-body);
+}
+
+.language-switcher.is-switching .lang-indicator {
+  animation: indicatorPulse 0.28s ease;
+}
+
+.lang-btn.target {
+  animation: targetPop 0.28s ease;
+}
+
+.lang-btn:disabled {
+  cursor: wait;
+}
+
+.separator {
+  position: relative;
+  z-index: 1;
+  color: #ccc;
+  margin: 0;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.language-switcher.is-switching .separator {
+  opacity: 0.2;
+}
+
+@keyframes indicatorPulse {
+  0% {
+    box-shadow: 0 6px 14px rgba(212, 175, 55, 0.3);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 8px 18px rgba(212, 175, 55, 0.5);
+    filter: brightness(1.05);
+  }
+  100% {
+    box-shadow: 0 6px 14px rgba(212, 175, 55, 0.35);
+    filter: brightness(1);
+  }
+}
+
+@keyframes targetPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .lang-indicator.ne {
+    transform: translateX(calc(100% + 6px));
+  }
+
+  .lang-btn {
+    min-width: 46px;
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}

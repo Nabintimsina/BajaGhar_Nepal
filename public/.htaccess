@@ -1,0 +1,35 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Redirect non-www to www
+  RewriteCond %{HTTP_HOST} ^bajanepal\.com$ [NC]
+  RewriteRule ^ https://www.bajanepal.com%{REQUEST_URI} [R=301,L]
+
+  # Do NOT rewrite if it's an actual file
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # Do NOT rewrite if it's an actual directory
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Do NOT rewrite /api requests - let backend handle them
+  RewriteCond %{REQUEST_URI} ^/api [NC]
+  RewriteRule ^ - [L]
+
+  # Do NOT rewrite /admin requests
+  RewriteCond %{REQUEST_URI} ^/admin [NC]
+  RewriteRule ^ - [L]
+
+  # Do NOT rewrite /static requests
+  RewriteCond %{REQUEST_URI} ^/static [NC]
+  RewriteRule ^ - [L]
+
+  # Do NOT rewrite /media requests
+  RewriteCond %{REQUEST_URI} ^/media [NC]
+  RewriteRule ^ - [L]
+
+  # Rewrite everything else to index.html for React Router
+  RewriteRule ^ index.html [QSA,L]
+</IfModule>

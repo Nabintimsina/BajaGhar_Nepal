@@ -1,0 +1,229 @@
+.expert-detail-page {
+  padding-top: var(--spacing-md);
+}
+
+/* Expert Profile Header */
+.expert-profile-header {
+  background: linear-gradient(135deg, var(--primary-maroon) 0%, var(--primary-deep-red) 100%);
+  color: var(--text-light);
+  padding: var(--spacing-xl) 0;
+}
+
+.profile-content {
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.profile-photo-large {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid var(--accent-gold);
+  background-color: var(--secondary-beige);
+  flex-shrink: 0;
+}
+
+.profile-photo-large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-avatar {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--primary-maroon);
+  background-color: var(--accent-gold);
+}
+
+.profile-info h1 {
+  color: var(--text-light);
+  font-size: 2.75rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.expert-expertise-large {
+  color: var(--accent-gold);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+}
+
+.contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background-color: var(--accent-gold);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-medium);
+}
+
+.contact-button:hover {
+  background-color: var(--accent-bronze);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Biography Section */
+.bio-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bio-quote {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--primary-maroon);
+  padding: var(--spacing-md);
+  background-color: var(--secondary-beige);
+  border-left: 4px solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.bio-detailed {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* Achievements Section */
+.achievements-section h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  justify-content: center;
+}
+
+.achievements-list {
+  list-style: none;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--secondary-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.achievement-icon {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.achievement-item span {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Teaching Section */
+.teaching-intro {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Specialized Instruments */
+.instruments-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.instrument-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  background-color: var(--secondary-light);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  text-decoration: none;
+  transition: all var(--transition-medium);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.instrument-link-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.instrument-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--secondary-beige);
+  flex-shrink: 0;
+}
+
+.instrument-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.instrument-link-info h3 {
+  color: var(--primary-maroon);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.instrument-link-info p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-info h1 {
+    font-size: 2rem;
+  }
+
+  .expert-expertise-large {
+    font-size: 1.25rem;
+  }
+
+  .expert-instruments-tags {
+    justify-content: center;
+  }
+
+  .bio-quote {
+    font-size: 1.1rem;
+  }
+
+  .bio-detailed {
+    font-size: 1rem;
+  }
+
+  .instruments-list {
+    grid-template-columns: 1fr;
+  }
+}

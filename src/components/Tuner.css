@@ -1,0 +1,603 @@
+.tuner-section {
+  background: linear-gradient(135deg, #f5f1ea 0%, #faf8f3 100%);
+  padding: 1.35rem 0;
+}
+
+.tuner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0.45rem 0;
+  transition: opacity 0.3s ease;
+}
+
+.tuner-header:hover {
+  opacity: 0.8;
+}
+
+.tuner-header .section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  color: #7d3c2a;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.tuner-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tuner-content-compact {
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.tuner-compact .tuner-instructions {
+  margin-top: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: rgba(245, 240, 232, 0.6);
+  border-radius: 10px;
+}
+
+/* Tuning Info */
+.tuning-info {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.tuning-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.tuning-name {
+  margin: 0;
+  color: #555;
+  font-size: 0.88rem;
+}
+
+.listening-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: #f1ede7;
+  color: #7d3c2a;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.listening-pill.live {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.target-notes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+}
+
+.target-notes strong {
+  color: #7d3c2a;
+  font-weight: 600;
+}
+
+.notes-list {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.note-badge {
+  display: inline-block;
+  padding: 0.32rem 0.68rem;
+  background: linear-gradient(135deg, #d4a574 0%, #b8895a 100%);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.note-badge.active {
+  background: linear-gradient(135deg, #7d3c2a 0%, #5a2a1f 100%);
+  box-shadow: 0 0 0 3px rgba(125, 60, 42, 0.15);
+}
+
+/* Error Message */
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #c33;
+}
+
+.error-message p {
+  margin: 0.5rem 0;
+}
+
+.error-message .help-text {
+  font-size: 0.85rem;
+  color: #a22;
+}
+
+/* Tuner Interface */
+.tuner-interface {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+/* Frequency Display */
+.frequency-display {
+  text-align: center;
+  min-height: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-readout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: #faf7f2;
+  color: #7d3c2a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.live-readout.in-tune {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.live-readout.sharp {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.live-readout.flat {
+  background: #e3f2fd;
+  color: #01579b;
+}
+
+.accuracy-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 0.7rem;
+}
+
+.accuracy-badge.excellent {
+  color: #2e7d32;
+}
+
+.accuracy-badge.good {
+  color: #558b2f;
+}
+
+.accuracy-badge.needs-adjustment {
+  color: #ef6c00;
+}
+
+.accuracy-badge.far {
+  color: #c62828;
+}
+
+.tuning-guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.guide-item {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.guide-label {
+  display: block;
+  color: #7d3c2a;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+}
+
+.guide-value {
+  color: #555;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.frequency-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #7d3c2a;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+.frequency-value.waiting {
+  color: #999;
+  font-size: 2rem;
+}
+
+.note-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.note-name {
+  font-size: 1.1rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: #7d3c2a;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.note-name.in-tune {
+  background: #e8f5e9;
+  color: #2e7d32;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.note-name.sharp {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.note-name.flat {
+  background: #e3f2fd;
+  color: #01579b;
+}
+
+.cent-diff {
+  font-size: 0.82rem;
+  color: #999;
+  min-width: 60px;
+}
+
+/* Tuning Meter */
+.tuning-meter {
+  width: 100%;
+  max-width: 320px;
+}
+
+.meter-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  font-size: 0.78rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.meter-label .status {
+  font-weight: 600;
+  color: #7d3c2a;
+  transition: all 0.3s ease;
+}
+
+.status.in-tune {
+  color: #2e7d32;
+}
+
+.status.sharp {
+  color: #e65100;
+}
+
+.status.flat {
+  color: #01579b;
+}
+
+.meter-bar {
+  position: relative;
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.meter-scale {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.scale-mark {
+  width: 2px;
+  height: 100%;
+  background: #ddd;
+  position: absolute;
+}
+
+.meter-fill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.meter-needle {
+  position: absolute;
+  width: 3px;
+  height: 100%;
+  background: #7d3c2a;
+  top: 0;
+  transform: translateX(-50%);
+  transition: left 0.1s ease-out;
+  box-shadow: 0 0 4px rgba(125, 60, 42, 0.5);
+}
+
+.meter-needle.in-tune {
+  background: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.meter-needle.sharp {
+  background: #ff6f00;
+}
+
+.meter-needle.flat {
+  background: #1976d2;
+}
+
+/* Tuning Indicator */
+.tuning-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #7d3c2a;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.indicator-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+  animation: pulse 1s infinite;
+}
+
+.tuning-indicator.in-tune {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 2px solid #4caf50;
+}
+
+.tuning-indicator.in-tune .indicator-dot {
+  background: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+}
+
+.tuning-indicator.sharp {
+  background: #fff3e0;
+  color: #e65100;
+  border: 2px solid #ff6f00;
+}
+
+.tuning-indicator.sharp .indicator-dot {
+  background: #ff6f00;
+}
+
+.tuning-indicator.flat {
+  background: #e3f2fd;
+  color: #01579b;
+  border: 2px solid #1976d2;
+}
+
+.tuning-indicator.flat .indicator-dot {
+  background: #1976d2;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Microphone Button */
+.mic-button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.4rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #7d3c2a 0%, #5a2a1f 100%);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(125, 60, 42, 0.3);
+  min-width: 155px;
+  justify-content: center;
+}
+
+.mic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(125, 60, 42, 0.4);
+}
+
+.mic-button:active {
+  transform: translateY(0);
+}
+
+.mic-button.listening {
+  background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+  box-shadow: 0 0 20px rgba(211, 47, 47, 0.4);
+}
+
+.mic-button.listening:hover {
+  box-shadow: 0 0 24px rgba(211, 47, 47, 0.6);
+}
+
+/* Instructions */
+.tuner-instructions {
+  background: #fafafa;
+  border-left: 4px solid #d4a574;
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.tuner-instructions h4 {
+  margin: 0 0 0.75rem 0;
+  color: #7d3c2a;
+  font-weight: 600;
+}
+
+.tuner-instructions ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.tuner-instructions li {
+  margin: 0.35rem 0;
+  color: #555;
+  font-size: 0.84rem;
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.45;
+}
+
+.tuner-instructions li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #d4a574;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tuner-section {
+    padding: 1.1rem 0;
+  }
+
+  .tuner-content {
+    padding: 0.9rem;
+  }
+
+  .frequency-value {
+    font-size: 1.55rem;
+  }
+
+  .note-info {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .tuning-meter {
+    max-width: 100%;
+  }
+
+  .mic-button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .tuner-header .section-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tuner-content {
+    padding: 0.8rem;
+  }
+
+  .frequency-display {
+    min-height: 76px;
+  }
+
+  .frequency-value {
+    font-size: 1.35rem;
+  }
+
+  .note-name {
+    font-size: 0.95rem;
+  }
+
+  .note-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .meter-label {
+    font-size: 0.72rem;
+  }
+
+  .mic-button {
+    padding: 0.6rem 1.15rem;
+    font-size: 0.82rem;
+  }
+
+  .tuner-instructions {
+    padding: 0.75rem;
+  }
+
+  .tuner-instructions ul {
+    padding-left: 1rem;
+  }
+
+  .tuner-instructions li {
+    padding-left: 1.1rem;
+    font-size: 0.8rem;
+  }
+}

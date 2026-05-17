@@ -1,0 +1,122 @@
+.experts-intro {
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+  text-align: center;
+}
+
+.experts-intro p {
+  font-size: var(--fs-body-lg);
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.experts-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  justify-content: center;
+  margin-top: var(--spacing-xl);
+}
+
+.experts-grid > * {
+  flex: 0 1 300px;
+  max-width: 300px;
+}
+
+/* Become an Expert Section */
+.become-expert-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.become-expert-content h2 {
+  color: var(--primary-maroon);
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  margin-bottom: var(--spacing-md);
+}
+
+.become-expert-content > p {
+  font-size: var(--fs-body-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.7;
+}
+
+.expert-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+  justify-items: center;
+}
+
+.benefit {
+  background-color: var(--secondary-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 8px var(--shadow-base);
+  width: 100%;
+  max-width: 300px;
+}
+
+.benefit h4 {
+  color: var(--primary-maroon);
+  font-size: var(--fs-h4);
+  margin-bottom: var(--spacing-sm);
+}
+
+.benefit p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: var(--fs-body-sm);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .expert-benefits {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .benefit {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .expert-benefits {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .benefit {
+    max-width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .experts-grid > * {
+    flex: 0 1 250px;
+    max-width: 250px;
+  }
+
+  .become-expert-content h2 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .expert-benefits {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .benefit {
+    max-width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .experts-grid > * {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ admin_branding_name }} Administration{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="icon" href="{{ admin_branding_logo_url }}" />
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ admin_branding_name }} Administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
