@@ -213,6 +213,13 @@
   color: #c62828;
 }
 
+.accuracy-badge.locked {
+  color: #1565c0;
+  background: #e3f2fd;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .tuning-guide {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

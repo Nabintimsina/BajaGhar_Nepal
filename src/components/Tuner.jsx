@@ -12,11 +12,23 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
   const [closestNote, setClosestNote] = useState(null)
   const [error, setError] = useState('')
   const [permission, setPermission] = useState('pending')
+  const [isHoldActive, setIsHoldActive] = useState(false)
 
   const audioContextRef = useRef(null)
   const pitchDetectorRef = useRef(null)
   const animationFrameRef = useRef(null)
   const streamRef = useRef(null)
+  const stabilityRef = useRef({ note: null, stableFrames: 0, lastFrequency: null })
+  const holdUntilRef = useRef(0)
+  const lastDetectedAtRef = useRef(0)
+
+  const IN_TUNE_CENTS = 3
+  const ACCEPTABLE_CENTS_WINDOW = 30
+  const REQUIRED_STABLE_FRAMES = 8
+  const HOLD_MS = 1200
+  const SIGNAL_HOLD_MS = 700
+  const MAX_FREQ_JUMP_RATIO = 0.06
+  const METER_CENT_RANGE = 25
 
   // Default tuning (Guitar standard)
   const defaultTuning = {
@@ -53,18 +65,31 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
 
   const getNoteAccuracy = (cents) => {
     const absCents = Math.abs(cents)
-    if (absCents < 5) return 'excellent'
-    if (absCents < 15) return 'good'
-    if (absCents < 30) return 'needs-adjustment'
+    if (absCents < IN_TUNE_CENTS) return 'excellent'
+    if (absCents < 8) return 'good'
+    if (absCents < 15) return 'needs-adjustment'
     return 'far'
   }
 
   const getListeningHint = () => {
     if (!isListening) return t('tuner.step1')
     if (!closestNote) return t('tuner.step2')
-    if (Math.abs(closestNote.cents) < 5) return t('tuner.inTune')
+    if (isHoldActive) return `${t('tuner.inTune')} (hold)`
+    if (Math.abs(closestNote.cents) < IN_TUNE_CENTS) return t('tuner.inTune')
     if (closestNote.cents > 0) return t('tuner.tooSharp')
     return t('tuner.tooFlat')
+  }
+
+  const resetTrackingState = (clearReadout = false) => {
+    stabilityRef.current = { note: null, stableFrames: 0, lastFrequency: null }
+    holdUntilRef.current = 0
+    lastDetectedAtRef.current = 0
+    setIsHoldActive(false)
+
+    if (clearReadout) {
+      setFrequency(null)
+      setClosestNote(null)
+    }
   }
 
   const startListening = async () => {
@@ -92,17 +117,63 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
       streamRef.current = stream
       setPermission('granted')
       setIsListening(true)
+      resetTrackingState(true)
 
       const detectPitch = () => {
+        const now = Date.now()
+
+        if (holdUntilRef.current > now) {
+          setIsHoldActive(true)
+          animationFrameRef.current = requestAnimationFrame(detectPitch)
+          return
+        }
+
+        if (holdUntilRef.current !== 0) {
+          holdUntilRef.current = 0
+          setIsHoldActive(false)
+        }
+
         const freq = pitchDetectorRef.current.getFrequency()
 
         if (freq > -1) {
-          setFrequency(freq)
-
           const frequencyMap = getFrequencyMap()
           const closest = pitchDetectorRef.current.findClosestNote(freq, frequencyMap)
-          setClosestNote(closest)
+
+          if (closest && Math.abs(closest.cents) <= ACCEPTABLE_CENTS_WINDOW) {
+            const stability = stabilityRef.current
+            const sameNote = stability.note === closest.note
+            const jumpRatio = stability.lastFrequency
+              ? Math.abs(freq - stability.lastFrequency) / closest.frequency
+              : 0
+            const smoothTransition = jumpRatio <= MAX_FREQ_JUMP_RATIO
+
+            if (sameNote && smoothTransition) {
+              stability.stableFrames += 1
+            } else {
+              stability.note = closest.note
+              stability.stableFrames = 1
+            }
+
+            stability.lastFrequency = freq
+
+            if (stability.stableFrames >= REQUIRED_STABLE_FRAMES) {
+              setFrequency(freq)
+              setClosestNote(closest)
+              lastDetectedAtRef.current = now
+
+              if (Math.abs(closest.cents) <= IN_TUNE_CENTS) {
+                holdUntilRef.current = now + HOLD_MS
+                setIsHoldActive(true)
+              }
+            }
+          } else {
+            stabilityRef.current = { note: null, stableFrames: 0, lastFrequency: null }
+          }
         } else {
+          stabilityRef.current = { note: null, stableFrames: 0, lastFrequency: null }
+        }
+
+        if (lastDetectedAtRef.current && now - lastDetectedAtRef.current > SIGNAL_HOLD_MS) {
           setFrequency(null)
           setClosestNote(null)
         }
@@ -135,6 +206,7 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
       streamRef.current.getTracks().forEach((track) => track.stop())
     }
 
+    resetTrackingState()
     setIsListening(false)
     setFrequency(null)
     setClosestNote(null)
@@ -142,7 +214,7 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
 
   const getTuningStatus = () => {
     if (!closestNote) return 'waiting'
-    if (Math.abs(closestNote.cents) < 5) return 'in-tune'
+    if (Math.abs(closestNote.cents) < IN_TUNE_CENTS) return 'in-tune'
     if (closestNote.cents > 0) return 'sharp'
     return 'flat'
   }
@@ -157,9 +229,9 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
 
   const getTuningBar = () => {
     if (!closestNote) return 0
-    // Convert cents to a 0-100 scale (±50 cents = 0-100)
-    const cents = closestNote.cents
-    return Math.max(0, Math.min(100, 50 + cents))
+    // Keep the meter focused around a tighter band for precise tuning.
+    const cents = Math.max(-METER_CENT_RANGE, Math.min(METER_CENT_RANGE, closestNote.cents))
+    return Math.max(0, Math.min(100, 50 + (cents / METER_CENT_RANGE) * 50))
   }
 
   const tuningNotes = activeTuning.notes.map((note, idx) => ({
@@ -236,6 +308,7 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
                 {Math.abs(closestNote.cents).toFixed(1)} ¢ off
               </span>
             )}
+            {isHoldActive && <span className="accuracy-badge locked">stable</span>}
           </div>
 
           <div className="tuning-meter">

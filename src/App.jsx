@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import Instruments from './pages/Instruments'
 import InstrumentDetail from './pages/InstrumentDetail'
 import Learn from './pages/Learn'
+import TunerLab from './pages/TunerLab'
 import Experts from './pages/Experts'
 import ExpertDetail from './pages/ExpertDetail'
 import About from './pages/About'
@@ -37,6 +38,7 @@ function App() {
               <Route path="/instruments" element={<Instruments />} />
               <Route path="/instruments/:id" element={<InstrumentDetail />} />
               <Route path="/learn" element={<Learn />} />
+              <Route path="/tuner" element={<TunerLab />} />
               <Route path="/experts" element={<Experts />} />
               <Route path="/experts/:id" element={<ExpertDetail />} />
               <Route path="/about" element={<About />} />

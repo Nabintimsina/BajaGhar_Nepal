@@ -9,6 +9,7 @@ from .views import (
     TutorialViewSet,
     TunerConfigurationViewSet,
     BrandingView,
+    TunerSectionView,
 )
 
 router = DefaultRouter()
@@ -22,4 +23,5 @@ router.register('tuner-configurations', TunerConfigurationViewSet)
 
 urlpatterns = router.urls + [
     path('branding/', BrandingView.as_view()),
+    path('tuner/', TunerSectionView.as_view()),
 ]

@@ -4,6 +4,7 @@
     "instruments": "Instruments",
     "experts": "Experts",
     "learn": "Learn",
+    "tuner": "Tuner",
     "about": "About",
     "contact": "Contact",
     "login": "Login",
@@ -281,6 +282,13 @@
     "masteredInstruments": "Instruments {{name}} has mastered"
   },
   "tuner": {
+    "pageSubtitle": "Select an instrument and tuning standard, then tune with live feedback.",
+    "selectInstrument": "Select instrument",
+    "selectStandard": "Select tuning standard",
+    "noTunerEnabledInstruments": "No tuner-enabled instruments available",
+    "noStandardConfigured": "No tuning standard configured for this instrument.",
+    "openInstrumentDetails": "Open instrument details",
+    "default": "default",
     "defaultTuningName": "Guitar Standard",
     "micBlocked": "Microphone access was blocked. Please allow microphone access in your browser.",
     "noMic": "No microphone found. Please connect a microphone and try again.",

@@ -10,6 +10,8 @@ export class PitchDetector {
     this.analyser.smoothingTimeConstant = 0.8
     this.dataArray = new Uint8Array(this.analyser.frequencyBinCount)
     this.buffer = new Float32Array(bufferSize)
+    this.frequencyHistory = []
+    this.maxHistory = 5
   }
 
   async setupMicrophone() {
@@ -30,7 +32,24 @@ export class PitchDetector {
   getFrequency() {
     this.analyser.getFloatTimeDomainData(this.buffer)
     const frequency = this.autoCorrelate(this.buffer, this.audioContext.sampleRate)
-    return frequency
+
+    if (frequency <= -1) {
+      this.frequencyHistory = []
+      return -1
+    }
+
+    this.frequencyHistory.push(frequency)
+    if (this.frequencyHistory.length > this.maxHistory) {
+      this.frequencyHistory.shift()
+    }
+
+    // Require persistent signal for a short duration to reject transients.
+    if (this.frequencyHistory.length < 3) {
+      return -1
+    }
+
+    const sorted = [...this.frequencyHistory].sort((a, b) => a - b)
+    return sorted[Math.floor(sorted.length / 2)]
   }
 
   autoCorrelate(buffer, sampleRate) {
@@ -51,7 +70,7 @@ export class PitchDetector {
     rms = Math.sqrt(rms / size)
 
     // Not enough signal - need a minimum amplitude
-    if (rms < 0.01) return -1
+    if (rms < 0.015) return -1
 
     // Find the best correlation offset
     let lastCorrelation = 1
@@ -65,7 +84,7 @@ export class PitchDetector {
       correlation = 1 - correlation / maxSamples
 
       // Look for strong correlations that exceed previous ones
-      if (correlation > 0.9 && correlation > lastCorrelation) {
+      if (correlation > 0.92 && correlation > lastCorrelation) {
         if (correlation > best_correlation) {
           best_correlation = correlation
           best_offset = offset
@@ -75,9 +94,12 @@ export class PitchDetector {
       lastCorrelation = correlation
     }
 
-    // Return the frequency if we found a good correlation
-    if (best_correlation > 0.01) {
-      return sampleRate / best_offset
+    // Return the frequency if we found a good correlation.
+    if (best_offset > -1 && best_correlation > 0.92) {
+      const frequency = sampleRate / best_offset
+      // Keep detection within instrument-appropriate range.
+      if (frequency < 60 || frequency > 1200) return -1
+      return frequency
     }
     return -1
   }

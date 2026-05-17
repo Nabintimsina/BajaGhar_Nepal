@@ -1,0 +1,61 @@
+.tuner-lab-content {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.tuner-lab-panel {
+  background: var(--secondary-light);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+}
+
+.tuner-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.tuner-control-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.tuner-control-field label {
+  color: var(--primary-maroon);
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.tuner-control-field select {
+  width: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  padding: 0.55rem 0.7rem;
+}
+
+.tuner-lab-tuner {
+  margin-top: 0.5rem;
+}
+
+.tuner-lab-error {
+  color: #b42318;
+  font-weight: 600;
+  margin: 0.25rem 0 0;
+}
+
+.tuner-lab-empty {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.6rem 0;
+}
+
+@media (max-width: 768px) {
+  .tuner-control-grid {
+    grid-template-columns: 1fr;
+  }
+}

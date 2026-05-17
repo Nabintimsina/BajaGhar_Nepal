@@ -59,6 +59,11 @@ function Navbar() {
             </Link>
           </li>
           <li>
+            <Link to="/tuner" className={isActive('/tuner')} onClick={closeMenu}>
+              {t('nav.tuner')}
+            </Link>
+          </li>
+          <li>
             <Link to="/experts" className={isActive('/experts')} onClick={closeMenu}>
               {t('nav.experts')}
             </Link>

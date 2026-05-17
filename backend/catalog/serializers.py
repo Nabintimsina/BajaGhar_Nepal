@@ -99,6 +99,7 @@ class InstrumentDetailSerializer(LanguageAwareModelSerializer):
     model_3d = serializers.SerializerMethodField()
     experts = ExpertPreviewSerializer(many=True, read_only=True)
     tuner_config = serializers.SerializerMethodField()
+    tuner_configs = serializers.SerializerMethodField()
 
     def get_category(self, obj: Instrument) -> str:
         return get_localized_value(obj.category, 'name', self.get_language())
@@ -126,8 +127,9 @@ class InstrumentDetailSerializer(LanguageAwareModelSerializer):
             'playing_technique_ne',
             'cultural_significance_ne',
             'show_brightness_control',
-                'show_tuner',
-                'tuner_config',
+            'show_tuner',
+            'tuner_config',
+            'tuner_configs',
             'experts',
         ]
 
@@ -141,14 +143,14 @@ class InstrumentDetailSerializer(LanguageAwareModelSerializer):
         return url
 
     def get_tuner_config(self, obj: Instrument):
-        try:
-            tuner = obj.tuner_config
-        except Exception:
-            tuner = None
+        tuner = obj.tuner_configs.filter(is_default=True).first() or obj.tuner_configs.first()
         if not tuner:
             return None
-        request = self.context.get('request')
         return TunerConfigurationSerializer(tuner, context=self.context).data
+
+    def get_tuner_configs(self, obj: Instrument):
+        tuners = obj.tuner_configs.all().order_by('-is_default', 'tuning_name')
+        return TunerConfigurationSerializer(tuners, many=True, context=self.context).data
 
 
 class ExpertListSerializer(LanguageAwareModelSerializer):
@@ -263,7 +265,7 @@ class TunerConfigurationSerializer(LanguageAwareModelSerializer):
 
     class Meta:
         model = TunerConfiguration
-        fields = ['id', 'instrument', 'tuning_name', 'notes', 'frequencies', 'is_default', 'created_at']
+        fields = ['id', 'instrument', 'tuning_name', 'notes', 'frequencies', 'is_default', 'created_at', 'updated_at']
         read_only_fields = ['created_at']
 
 

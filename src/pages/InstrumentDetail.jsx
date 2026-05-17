@@ -4,8 +4,6 @@ import { ArrowLeft, MapPin, Tag } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Viewer3D from '../components/Viewer3D'
 import VideoTutorial from '../components/VideoTutorial'
-import Tuner from '../components/Tuner'
-import TunerSetup from '../components/TunerSetup'
 import { api } from '../api/client'
 import './InstrumentDetail.css'
 
@@ -15,7 +13,6 @@ function InstrumentDetail() {
   const { id } = useParams()
   const [instrument, setInstrument] = useState(null)
   const [tutorials, setTutorials] = useState([])
-  const [tunerOpen, setTunerOpen] = useState(false)
   const [expandedSections, setExpandedSections] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
@@ -61,12 +58,6 @@ function InstrumentDetail() {
       isMounted = false
     }
   }, [id, activeLanguage])
-
-  useEffect(() => {
-    if (!instrument?.show_tuner) {
-      setTunerOpen(false)
-    }
-  }, [instrument?.show_tuner])
 
   if (isLoading) {
     return (
@@ -218,47 +209,6 @@ function InstrumentDetail() {
               </article>
             </div>
 
-            {instrument.show_tuner && instrument.tuner_config && (
-              <section className="detail-box tuner-box">
-                <button
-                  type="button"
-                  className="media-card-header"
-                  onClick={() => setTunerOpen(!tunerOpen)}
-                  aria-expanded={tunerOpen}
-                >
-                  <div>
-                    <span className="eyebrow">{t('instrumentDetail.practiceTool')}</span>
-                    <h2>{t('learn.tuner')}</h2>
-                  </div>
-                  <span className="media-toggle">{tunerOpen ? t('instrumentDetail.minimize') : t('instrumentDetail.expand')}</span>
-                </button>
-
-                {tunerOpen && (
-                  <div className="tuner-panel">
-                    <Tuner tunerConfig={instrument.tuner_config} compact />
-                  </div>
-                )}
-              </section>
-            )}
-
-            {instrument.show_tuner && !instrument.tuner_config && (
-              <section className="detail-box tuner-box">
-                <div className="media-card-header">
-                  <div>
-                    <span className="eyebrow">{t('instrumentDetail.practiceTool')}</span>
-                    <h2>{t('learn.tuner')}</h2>
-                  </div>
-                </div>
-
-                <div className="tuner-setup">
-                  <p>{t('instrumentDetail.tunerNotConfigured')}</p>
-                  <TunerSetup instrumentId={instrument.id} onCreated={async () => {
-                    const updated = await api.get(`instruments/${id}/`, { lang: activeLanguage })
-                    setInstrument(updated)
-                  }} />
-                </div>
-              </section>
-            )}
           </div>
         </div>
       </section>
@@ -269,6 +219,9 @@ function InstrumentDetail() {
           <div className="related-links">
             <Link to="/instruments" className="btn btn-primary">
               {t('instrumentDetail.viewAllInstruments')}
+            </Link>
+            <Link to="/tuner" className="btn btn-secondary">
+              {t('learn.tuner')}
             </Link>
             <Link to="/learn" className="btn btn-secondary">
               {t('instrumentDetail.continueLearning')}

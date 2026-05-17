@@ -161,7 +161,7 @@ class Tutorial(models.Model):
 
 
 class TunerConfiguration(models.Model):
-    instrument = models.OneToOneField(Instrument, on_delete=models.CASCADE, related_name='tuner_config')
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='tuner_configs')
     tuning_name = models.CharField(max_length=100, default='Standard')
     tuning_name_ne = models.CharField(max_length=100, blank=True, default='')
     notes = models.JSONField(default=list, help_text='List of note names, e.g. ["E2", "A2", "D3", "G3", "B3", "E4"]')
@@ -172,6 +172,25 @@ class TunerConfiguration(models.Model):
 
     class Meta:
         ordering = ['-is_default', 'tuning_name']
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.is_default:
+            TunerConfiguration.objects.filter(
+                instrument=self.instrument,
+                is_default=True,
+            ).exclude(pk=self.pk).update(is_default=False)
+            return
+
+        has_other_default = TunerConfiguration.objects.filter(
+            instrument=self.instrument,
+            is_default=True,
+        ).exclude(pk=self.pk).exists()
+
+        if not has_other_default:
+            TunerConfiguration.objects.filter(pk=self.pk).update(is_default=True)
+            self.is_default = True
 
     def __str__(self) -> str:
         return f"{self.instrument.name} - {self.tuning_name}"

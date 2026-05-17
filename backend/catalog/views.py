@@ -19,6 +19,8 @@ from .serializers import (
     TutorialSerializer,
     TunerConfigurationSerializer,
     BrandingSerializer,
+    get_localized_value,
+    get_requested_language,
 )
 from .permissions import IsAdminOrReadOnly
 from .filters import InstrumentFilter
@@ -32,7 +34,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class InstrumentViewSet(viewsets.ModelViewSet):
-    queryset = Instrument.objects.select_related('category').prefetch_related('experts')
+    queryset = Instrument.objects.select_related('category').prefetch_related('experts', 'tuner_configs')
     permission_classes = [IsAdminOrReadOnly]
     filterset_class = InstrumentFilter
     search_fields = ['name', 'description', 'history', 'materials', 'cultural_significance']
@@ -54,12 +56,18 @@ class InstrumentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'], permission_classes=[AllowAny])
     def tuner_config(self, request, pk=None):
         instrument = self.get_object()
-        try:
-            config = instrument.tuner_config
-            serializer = TunerConfigurationSerializer(config, context={'request': request})
-            return Response(serializer.data)
-        except TunerConfiguration.DoesNotExist:
-            return Response(None)
+        configs = instrument.tuner_configs.all().order_by('-is_default', 'tuning_name')
+        active = configs.filter(is_default=True).first() or configs.first()
+
+        if not active:
+            return Response({'active': None, 'options': []})
+
+        return Response(
+            {
+                'active': TunerConfigurationSerializer(active, context={'request': request}).data,
+                'options': TunerConfigurationSerializer(configs, many=True, context={'request': request}).data,
+            }
+        )
 
 
 class ExpertViewSet(viewsets.ModelViewSet):
@@ -170,10 +178,26 @@ class TutorialViewSet(viewsets.ModelViewSet):
 
 
 class TunerConfigurationViewSet(viewsets.ModelViewSet):
-    queryset = TunerConfiguration.objects.all()
+    queryset = TunerConfiguration.objects.select_related('instrument').all()
     serializer_class = TunerConfigurationSerializer
     permission_classes = [IsAdminOrReadOnly]
     ordering_fields = ['tuning_name', 'is_default']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        instrument_id = self.request.query_params.get('instrument')
+        if instrument_id:
+            queryset = queryset.filter(instrument_id=instrument_id)
+        return queryset
+
+    @action(detail=True, methods=['post'])
+    def set_default(self, request, pk=None):
+        config = self.get_object()
+        TunerConfiguration.objects.filter(instrument=config.instrument).update(is_default=False)
+        config.is_default = True
+        config.save(update_fields=['is_default'])
+        serializer = self.get_serializer(config)
+        return Response(serializer.data)
 
 
 class BrandingView(APIView):
@@ -189,3 +213,35 @@ class BrandingView(APIView):
         )
         serializer = BrandingSerializer(branding, context={'request': request})
         return Response(serializer.data)
+
+
+class TunerSectionView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        language = get_requested_language(request)
+        instruments = (
+            Instrument.objects.select_related('category')
+            .prefetch_related('tuner_configs')
+            .filter(tuner_configs__isnull=False)
+            .distinct()
+            .order_by('name')
+        )
+
+        payload = []
+        for instrument in instruments:
+            configs = instrument.tuner_configs.all().order_by('-is_default', 'tuning_name')
+            active = configs.filter(is_default=True).first() or configs.first()
+
+            payload.append(
+                {
+                    'id': instrument.id,
+                    'name': get_localized_value(instrument, 'name', language),
+                    'region': get_localized_value(instrument, 'region', language),
+                    'category': get_localized_value(instrument.category, 'name', language),
+                    'tuner_config': TunerConfigurationSerializer(active, context={'request': request}).data if active else None,
+                    'tuner_configs': TunerConfigurationSerializer(configs, many=True, context={'request': request}).data,
+                }
+            )
+
+        return Response(payload)

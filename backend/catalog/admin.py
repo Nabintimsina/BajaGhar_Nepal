@@ -44,11 +44,11 @@ class InstrumentAdmin(admin.ModelAdmin):
 
 class TunerConfigurationInline(admin.StackedInline):
     model = TunerConfiguration
-    can_delete = False
+    can_delete = True
     verbose_name = 'Tuner configuration'
-    verbose_name_plural = 'Tuner configuration'
+    verbose_name_plural = 'Tuner configurations'
     fk_name = 'instrument'
-    max_num = 1
+    extra = 1
     fields = ('tuning_name', 'tuning_name_ne', 'notes', 'frequencies', 'is_default')
 
     def has_add_permission(self, request, obj=None):
@@ -56,6 +56,15 @@ class TunerConfigurationInline(admin.StackedInline):
 
 
 InstrumentAdmin.inlines = getattr(InstrumentAdmin, 'inlines', ()) + (TunerConfigurationInline,)
+
+
+@admin.register(TunerConfiguration)
+class TunerConfigurationAdmin(admin.ModelAdmin):
+    list_display = ('instrument', 'tuning_name', 'is_default', 'updated_at')
+    list_filter = ('is_default', 'instrument__category')
+    search_fields = ('instrument__name', 'tuning_name')
+    ordering = ('instrument__name', '-is_default', 'tuning_name')
+    actions = [delete_selected_with_cascade]
 
 
 @admin.register(Expert)
