@@ -164,6 +164,8 @@ class TunerConfiguration(models.Model):
     instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='tuner_configs')
     tuning_name = models.CharField(max_length=100, default='Standard')
     tuning_name_ne = models.CharField(max_length=100, blank=True, default='')
+    instructions = models.TextField(blank=True, default='', help_text='Optional tuning tips or setup instructions shown on the tuner page')
+    instructions_ne = models.TextField(blank=True, default='', help_text='Optional Nepali tuning tips or setup instructions shown on the tuner page')
     notes = models.JSONField(default=list, help_text='List of note names, e.g. ["E2", "A2", "D3", "G3", "B3", "E4"]')
     frequencies = models.JSONField(default=list, help_text="List of frequencies in Hz, e.g. [82.41, 110.00, 146.83, 196.00, 246.94, 329.63]")
     is_default = models.BooleanField(default=True)

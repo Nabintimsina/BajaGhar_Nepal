@@ -47,6 +47,30 @@
   border-radius: 10px;
 }
 
+.tuning-instructions {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #e7dbcb;
+  background: linear-gradient(135deg, rgba(253, 248, 241, 0.95) 0%, rgba(248, 242, 234, 0.95) 100%);
+  color: #5f4838;
+}
+
+.tuning-instructions-title {
+  margin-bottom: 0.4rem;
+  color: #7d3c2a;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tuning-instructions p {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
 /* Tuning Info (left column card) */
 .tuning-info {
   margin-bottom: 1rem;
@@ -191,6 +215,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 14px;
+  margin-bottom : 20px
 }
 
 .tuner-controls {

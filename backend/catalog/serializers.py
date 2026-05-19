@@ -261,11 +261,11 @@ class TutorialSerializer(LanguageAwareModelSerializer):
 
 
 class TunerConfigurationSerializer(LanguageAwareModelSerializer):
-    localized_fields = ('tuning_name',)
+    localized_fields = ('tuning_name', 'instructions')
 
     class Meta:
         model = TunerConfiguration
-        fields = ['id', 'instrument', 'tuning_name', 'notes', 'frequencies', 'is_default', 'created_at', 'updated_at']
+        fields = ['id', 'instrument', 'tuning_name', 'instructions', 'notes', 'frequencies', 'is_default', 'created_at', 'updated_at']
         read_only_fields = ['created_at']
 
 

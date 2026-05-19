@@ -290,6 +290,7 @@
     "openInstrumentDetails": "Open instrument details",
     "default": "default",
     "defaultTuningName": "Guitar Standard",
+    "tuningTips": "Tuning tips",
     "micBlocked": "Microphone access was blocked. Please allow microphone access in your browser.",
     "noMic": "No microphone found. Please connect a microphone and try again.",
     "allowMic": "Please allow microphone access in your browser settings to use the tuner.",

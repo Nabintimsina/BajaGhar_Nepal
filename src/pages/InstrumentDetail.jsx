@@ -220,9 +220,6 @@ function InstrumentDetail() {
             <Link to="/instruments" className="btn btn-primary">
               {t('instrumentDetail.viewAllInstruments')}
             </Link>
-            <Link to="/tuner" className="btn btn-secondary">
-              {t('learn.tuner')}
-            </Link>
             <Link to="/learn" className="btn btn-secondary">
               {t('instrumentDetail.continueLearning')}
             </Link>

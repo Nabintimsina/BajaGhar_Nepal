@@ -49,7 +49,7 @@ class TunerConfigurationInline(admin.StackedInline):
     verbose_name_plural = 'Tuner configurations'
     fk_name = 'instrument'
     extra = 1
-    fields = ('tuning_name', 'tuning_name_ne', 'notes', 'frequencies', 'is_default')
+    fields = ('tuning_name', 'tuning_name_ne', 'instructions', 'instructions_ne', 'notes', 'frequencies', 'is_default')
 
     def has_add_permission(self, request, obj=None):
         return True

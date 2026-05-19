@@ -324,6 +324,13 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
             )}
           </button>
         </div>
+
+        {activeTuning.instructions && (
+          <div className="tuning-instructions">
+            <div className="tuning-instructions-title">{t('tuner.tuningTips')}</div>
+            <p>{activeTuning.instructions}</p>
+          </div>
+        )}
       </div>
     </div>
   )
