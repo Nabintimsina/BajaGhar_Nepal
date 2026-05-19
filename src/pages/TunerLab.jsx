@@ -158,7 +158,11 @@ function TunerLab() {
 
           {!error && !isLoading && !detailLoading && selectedConfig && (
             <div className="tuner-lab-tuner">
-              <Tuner tunerConfig={selectedConfig} compact />
+              <Tuner
+                tunerConfig={selectedConfig}
+                compact
+                instrumentName={selectedInstrumentDetail?.name || ''}
+              />
             </div>
           )}
 

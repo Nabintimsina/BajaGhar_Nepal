@@ -2,9 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { Mic, MicOff, Settings2, ChevronDown, ChevronUp } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { PitchDetector } from '../utils/pitchDetection'
+import SarangiDisplay from './SarangiDisplay'
 import './Tuner.css'
 
-function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) {
+function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, instrumentName = '' }) {
   const { t } = useTranslation()
   const [isExpanded, setIsExpanded] = useState(defaultExpanded)
   const [isListening, setIsListening] = useState(false)
@@ -240,103 +241,71 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
     index: idx,
   }))
 
+  // current string indicator removed — only tuning meter is shown
+
   const tunerContent = (
     <div className="tuner-content tuner-content-compact">
-      <div className="tuning-info">
-        <div className="tuning-name-row">
-          <p className="tuning-name">
-          <strong>{t('tuner.tuning')}:</strong> {activeTuning.tuning_name}
-          </p>
-          <span className={`listening-pill ${isListening ? 'live' : ''}`}>
-            {isListening ? t('tuner.listening') : t('tuner.startListening')}
-          </span>
-        </div>
-        <div className="target-notes">
-          <strong>{t('tuner.targetNotes')}:</strong>
-          <span className="notes-list">
-            {tuningNotes.map((item) => (
-              <span
-                key={item.index}
-                className={`note-badge ${closestNote?.note === item.note ? 'active' : ''}`}
-                title={`${item.note} • ${item.frequency.toFixed(2)} Hz`}
-              >
-                {item.note}
-              </span>
-            ))}
-          </span>
-        </div>
-      </div>
-
       {error && (
         <div className="error-message">
           <p>{error}</p>
           {permission === 'denied' && (
-            <p className="help-text">
-              {t('tuner.allowMic')}
-            </p>
+            <p className="help-text">{t('tuner.allowMic')}</p>
           )}
         </div>
       )}
 
-      {!error && (
-        <div className="tuner-interface">
-          <div className="frequency-display">
-            {frequency ? (
-              <>
-                <div className="frequency-value">{frequency.toFixed(1)} Hz</div>
-                {closestNote && (
-                  <div className="note-info">
-                    <div className={`note-name ${getTuningStatus()}`}>
-                      {closestNote.note}
-                    </div>
-                    <div className="cent-diff">
-                      {closestNote.cents > 0 ? '+' : ''}
-                      {closestNote.cents.toFixed(1)} ¢
-                    </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="frequency-value waiting">--</div>
-            )}
-          </div>
-
-          <div className={`live-readout ${getTuningStatus()}`}>
-            <span>{getListeningHint()}</span>
-            {closestNote && (
-              <span className={`accuracy-badge ${getNoteAccuracy(closestNote.cents)}`}>
-                {Math.abs(closestNote.cents).toFixed(1)} ¢ off
-              </span>
-            )}
-            {isHoldActive && <span className="accuracy-badge locked">stable</span>}
-          </div>
-
-          <div className="tuning-meter">
-            <div className="meter-label">
-              <span>{t('tuner.flat')}</span>
-              <span className={`status ${getTuningStatus()}`}>{getStatusMessage()}</span>
-              <span>{t('tuner.sharp')}</span>
-            </div>
-            <div className="meter-bar">
-              <div className="meter-scale">
-                {[0, 25, 50, 75, 100].map((val) => (
-                  <div key={val} className="scale-mark" style={{ left: `${val}%` }} />
+      <div className="tuner-interface">
+        <div className="tuning-display-container">
+          {/* Target notes based on selected tuning standard */}
+          <div className="tuning-info">
+            <div className="target-notes">
+              <strong>{t('tuner.targetNotes')}:</strong>
+              <span className="notes-list">
+                {activeTuning.notes.map((note, idx) => (
+                  <span
+                    key={note}
+                    className={`note-badge ${closestNote?.note === note ? 'active' : ''}`}
+                    title={note}
+                  >
+                    {note}
+                  </span>
                 ))}
-              </div>
-              <div className="meter-fill">
-                <div
-                  className={`meter-needle ${getTuningStatus()}`}
-                  style={{ left: `${getTuningBar()}%` }}
-                />
-              </div>
+              </span>
             </div>
           </div>
 
-          <div className={`tuning-indicator ${getTuningStatus()}`}>
-            <div className="indicator-dot" />
-            <span>{getStatusMessage()}</span>
-          </div>
+          <div className="tuning-display-main">
+            {/* Top: Combined tuning meter + status */}
+            <div className={`tuning-top ${getTuningStatus()}`}>
+              <div className={`tuning-meter ${getTuningStatus()}`}>
+                <div className="tuning-note">{closestNote?.note || '--'}</div>
+                <div className="tuning-cents">{closestNote ? `${closestNote.cents > 0 ? '+' : ''}${closestNote.cents.toFixed(1)}¢` : '--'}</div>
+                {/* tuning-string-label removed; only tuning-meter remains */}
+                <div className="tuning-status-message">
+                  {getTuningStatus() === 'in-tune' && <span className="status-in-tune">✓ {t('tuner.inTune')}</span>}
+                  {getTuningStatus() === 'sharp' && <span className="status-sharp">↑ {t('tuner.tooSharp')}</span>}
+                  {getTuningStatus() === 'flat' && <span className="status-flat">↓ {t('tuner.tooFlat')}</span>}
+                  {getTuningStatus() === 'waiting' && isListening && <span className="status-listening">🎵 {t('tuner.listening')}</span>}
+                </div>
+              </div>
 
+              {/* status-display removed — only tuning-meter shows status now */}
+            </div>
+
+            {/* Sarangi Display */}
+            {activeTuning.notes.length === 4 && (
+              <SarangiDisplay
+                closestNote={closestNote}
+                frequency={frequency}
+                tuningStatus={getTuningStatus()}
+                activeTuning={activeTuning}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Centered mic button across the page */}
+        <div className="mic-center">
           <button
             className={`mic-button ${isListening ? 'listening' : ''}`}
             onClick={isListening ? stopListening : startListening}
@@ -344,29 +313,17 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false }) 
           >
             {isListening ? (
               <>
-                <MicOff size={24} />
-                <span>{t('tuner.stopTuning')}</span>
+                <Mic size={18} />
+                <span className="sr-only">{t('tuner.stopListening')}</span>
               </>
             ) : (
               <>
-                <Mic size={24} />
-                <span>{t('tuner.startTuning')}</span>
+                <MicOff size={18} />
+                <span className="sr-only">{t('tuner.startListening')}</span>
               </>
             )}
           </button>
-
         </div>
-      )}
-
-      <div className="tuner-instructions">
-        <h4>{t('tuner.howToUse')}</h4>
-        <ul>
-          <li>{t('tuner.step1')}</li>
-          <li>{t('tuner.step2')}</li>
-          <li>{t('tuner.step3')}</li>
-          <li>{t('tuner.step4')}</li>
-          <li>{t('tuner.step5')}</li>
-        </ul>
       </div>
     </div>
   )
