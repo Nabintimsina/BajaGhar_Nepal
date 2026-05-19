@@ -5,8 +5,8 @@
 
 .tuner-lab-panel {
   background: var(--secondary-light);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
+  /* border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); */
   padding: 1rem;
 }
 
