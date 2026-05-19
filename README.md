@@ -71,8 +71,8 @@ See the repository root for a full layout. Key folders:
 |---|---:|---|
 | `/api/instruments/` | GET | List instruments |
 | `/api/instruments/:id/` | GET | Instrument details |
-| `/api/catalog/experts/` | GET | List experts |
-| `/api/catalog/experts/:id/` | GET | Expert details |
+| `/api/experts/` | GET | List experts |
+| `/api/experts/:id/` | GET | Expert details |
 | `/api/contact/` | POST | Submit contact form |
 
 ## Contributing
