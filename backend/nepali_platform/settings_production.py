@@ -12,8 +12,8 @@ SECURE_HSTS_PRELOAD = True
 
 
 STATIC_URL = '/api/static/'
-STATIC_ROOT = Path('/home1/bajanepa/public_html/api/static')
+STATIC_ROOT = Path('/home2/bajanepa/public_html/api/static')
 MEDIA_URL = '/api/media/'
-MEDIA_ROOT = Path('/home1/bajanepa/public_html/api/media')
-MEDIA_SYMLINK_PATH = '/home1/bajanepa/public_html/api/media'
-MEDIA_TARGET_PATH = '/home1/bajanepa/bajanepal/backend/media'
+MEDIA_ROOT = Path('/home2/bajanepa/public_html/api/media')
+MEDIA_SYMLINK_PATH = '/home2/bajanepa/public_html/api/media'
+MEDIA_TARGET_PATH = '/home2/bajanepa/bajanepal/backend/media'
