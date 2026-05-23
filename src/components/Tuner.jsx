@@ -23,13 +23,13 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
   const holdUntilRef = useRef(0)
   const lastDetectedAtRef = useRef(0)
 
-  const IN_TUNE_CENTS = 6
+  const IN_TUNE_CENTS = 7
   const ACCEPTABLE_CENTS_WINDOW = 100
-  const REQUIRED_STABLE_FRAMES = 8
+  const REQUIRED_STABLE_FRAMES = 6
   const HOLD_MS = 1200
-  const SIGNAL_HOLD_MS = 700
-  const MAX_FREQ_JUMP_RATIO = 0.06
-  const METER_CENT_RANGE = 25
+  const SIGNAL_HOLD_MS = 900
+  const MAX_FREQ_JUMP_RATIO = 0.10
+  const METER_CENT_RANGE = 50
 
   // Default tuning (Guitar standard)
   const defaultTuning = {
