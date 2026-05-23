@@ -30,6 +30,7 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
   const SIGNAL_HOLD_MS = 900
   const MAX_FREQ_JUMP_RATIO = 0.10
   const METER_CENT_RANGE = 50
+  const ALLOWED_SEMITONE_DISTANCE = 2
 
   // Default tuning (Guitar standard)
   const defaultTuning = {
@@ -62,6 +63,15 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
       note: activeTuning.notes[idx],
       frequency: freq
     }))
+  }
+
+  const getSemitoneDistance = (freq1, freq2) => {
+    return 12 * Math.log2(freq1 / freq2)
+  }
+
+  const isWithinSemitoneRange = (freq, targetFreq) => {
+    const distance = Math.abs(getSemitoneDistance(freq, targetFreq))
+    return distance <= ALLOWED_SEMITONE_DISTANCE
   }
 
   const getNoteAccuracy = (cents) => {
@@ -139,6 +149,16 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
         if (freq > -1) {
           const frequencyMap = getFrequencyMap()
           const closest = pitchDetectorRef.current.findClosestNote(freq, frequencyMap)
+
+          const isInSemitoneRange = activeTuning.frequencies.some((targetFreq) =>
+            isWithinSemitoneRange(freq, targetFreq)
+          )
+
+          if (!closest || !isInSemitoneRange) {
+            stabilityRef.current = { note: null, stableFrames: 0, lastFrequency: null }
+            animationFrameRef.current = requestAnimationFrame(detectPitch)
+            return
+          }
 
           if (closest && Math.abs(closest.cents) <= ACCEPTABLE_CENTS_WINDOW) {
             const stability = stabilityRef.current
@@ -240,6 +260,24 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
     frequency: activeTuning.frequencies[idx],
     index: idx,
   }))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   // current string indicator removed — only tuning meter is shown
 
