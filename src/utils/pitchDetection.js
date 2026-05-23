@@ -171,22 +171,3 @@ export const getFrequencyChartData = (frequency, targetFrequencies) => {
 
   return frequencies
 }
-
-// Standard tunings
-export const TUNING_PRESETS = {
-  guitar: {
-    name: 'Guitar Standard',
-    notes: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
-    frequencies: [82.41, 110.00, 146.83, 196.00, 246.94, 329.63]
-  },
-  sitar: {
-    name: 'Sitar Standard',
-    notes: ['S', 'P', 'S', 'P', 'S'],
-    frequencies: [110.00, 196.00, 220.00, 392.00, 440.00]
-  },
-  violin: {
-    name: 'Violin Standard',
-    notes: ['G3', 'D4', 'A4', 'E5'],
-    frequencies: [196.00, 293.66, 440.00, 659.25]
-  }
-}

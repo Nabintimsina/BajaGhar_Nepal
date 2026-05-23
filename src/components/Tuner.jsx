@@ -23,8 +23,8 @@ function Tuner({ tunerConfig = null, defaultExpanded = true, compact = false, in
   const holdUntilRef = useRef(0)
   const lastDetectedAtRef = useRef(0)
 
-  const IN_TUNE_CENTS = 3
-  const ACCEPTABLE_CENTS_WINDOW = 30
+  const IN_TUNE_CENTS = 6
+  const ACCEPTABLE_CENTS_WINDOW = 100
   const REQUIRED_STABLE_FRAMES = 8
   const HOLD_MS = 1200
   const SIGNAL_HOLD_MS = 700
