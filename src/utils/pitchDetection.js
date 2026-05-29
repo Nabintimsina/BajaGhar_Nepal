@@ -44,7 +44,7 @@ export class PitchDetector {
     }
 
     // Require persistent signal for a short duration to reject transients.
-    if (this.frequencyHistory.length < 3) {
+    if (this.frequencyHistory.length < 2) {
       return -1
     }
 
@@ -70,7 +70,7 @@ export class PitchDetector {
     rms = Math.sqrt(rms / size)
 
     // Not enough signal - need a minimum amplitude
-    if (rms < 0.015) return -1
+    if (rms < 0.01) return -1
 
     // Find the best correlation offset
     let lastCorrelation = 1
@@ -84,7 +84,7 @@ export class PitchDetector {
       correlation = 1 - correlation / maxSamples
 
       // Look for strong correlations that exceed previous ones
-      if (correlation > 0.92 && correlation > lastCorrelation) {
+      if (correlation > 0.88 && correlation > lastCorrelation) {
         if (correlation > best_correlation) {
           best_correlation = correlation
           best_offset = offset
@@ -95,7 +95,7 @@ export class PitchDetector {
     }
 
     // Return the frequency if we found a good correlation.
-    if (best_offset > -1 && best_correlation > 0.92) {
+    if (best_offset > -1 && best_correlation > 0.88) {
       const frequency = sampleRate / best_offset
       // Keep detection within instrument-appropriate range.
       if (frequency < 60 || frequency > 1200) return -1
