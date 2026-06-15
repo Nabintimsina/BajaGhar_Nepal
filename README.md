@@ -19,7 +19,7 @@ An interactive web platform showcasing traditional Nepali musical instruments wi
 1. Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/Nabintimsina/nepali-intrumentsV2.git
+git clone https://github.com/Nabintimsina/BajaGhar_Nepal.git
 cd "BajaGhar_Nepal"
 npm install
 ```
