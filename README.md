@@ -75,24 +75,7 @@ See the repository root for a full layout. Key folders:
 | `/api/experts/:id/` | GET | Expert details |
 | `/api/contact/` | POST | Submit contact form |
 
-## Contributing
 
-Contributions are welcome. Suggested workflow:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feat/your-feature`)
-3. Implement and test locally
-4. Submit a pull request with a clear description
-
-Please run backend migrations and frontend build checks before opening a PR.
-
-## Support
-
-Report bugs or request help via the repository Issues.
-
-## Author
-
-Nabin Timsina — https://github.com/Nabintimsina
 
 ---
 
